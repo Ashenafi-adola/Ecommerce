@@ -10,7 +10,7 @@
         justify-content: center;
         align-items: center;
     }
-    form{
+    .regist-form{
         margin-top: 250px;
         border: solid gray 0.5px;
         font-family: Arial, Helvetica, sans-serif;
@@ -24,7 +24,7 @@
     .form-header{
         text-align: center;
     }
-    input{
+    .regist-form input{
         height: 30px;
         font-size: 20px;
         width: 99%;
@@ -34,11 +34,11 @@
         border-radius: 5px;
 
     }
-    input:focus {
+    .regist-form input:focus {
         border-color: #2a92fa;
         box-shadow: 1px 2px 4px rgba(77, 166, 255, 1);
     }
-    button{
+    .regist-btn{
         margin-top: 10px;
         width: 99%;
         border: none;
@@ -53,8 +53,8 @@
     }
     </style>
     <div class="container">
-        <form action="" method="post">
-            <div>
+        <form action="" method="post" class="regist-form">
+            <div class="regist-head-div">
                 <h2 class="form-header">Register</h2>
             </div>
             {% csrf_token %}
@@ -62,7 +62,7 @@
                 {{form}}
             </div>
             <div>
-                <button type="submit">Register</button>
+                <button type="submit" class="regist-btn">Register</button>
             </div>
             <div>
                 <p>Already have account? <a href="{% url 'login' %}">Sign In</a></p>
