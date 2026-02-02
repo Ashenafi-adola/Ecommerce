@@ -15,12 +15,14 @@ class Product(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
     photo = models.ImageField()
     sold_status = models.BooleanField(default=False)
+    cart_status = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
 
 class Cart(models.Model):
-    pass
+    producs = models.ManyToManyField(Product, related_name='product')
+    
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
