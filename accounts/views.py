@@ -36,3 +36,7 @@ def register(request):
         'form':form,
     }
     return render(request, 'accounts/register.html', context)
+
+def signout(request):
+    logout(request)
+    return redirect('home')
