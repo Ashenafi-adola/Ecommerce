@@ -1,0 +1,38 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Collections{% endblock %}
+
+{% block content %}
+<style>
+    .col-cont{
+        display: flex;
+    }
+    .col-div{
+        border: solid black 1px;
+        margin: 2px;
+        padding: 5px;
+        border-radius: 10px;
+        background-color: rgb(230, 219, 219);
+        box-shadow: 2px 2px 5px;
+    }
+</style>
+<div class="container">
+    <div class="col-cont">
+        {% for collection in collections %}
+            <div class="col-div">
+                <div>
+                    <h3>{{collection.name}}</h3>
+                    <div>
+                        <a href="{% url 'add-product' %}">Add Product</a>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <p>{{collection.descrip }}</p>
+                </div>
+                
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -19,6 +19,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    def descrip(self):
+        return self.description[:50]
 
 class Cart(models.Model):
     producs = models.ManyToManyField(Product, related_name='product')
