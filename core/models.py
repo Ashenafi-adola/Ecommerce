@@ -18,13 +18,16 @@ class Product(models.Model):
     cart_status = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
-    def descrip(self):
         return self.description[:50]
 
 class Cart(models.Model):
-    producs = models.ManyToManyField(Product, related_name='product')
-    
+    products = models.ManyToManyField(Product, related_name='product')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    Product = models.ManyToManyField(Product, related_name='item')
+
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
