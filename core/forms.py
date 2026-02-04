@@ -58,11 +58,5 @@ class ProductForm(ModelForm):
                 'name':'sold',
                 'data-custom': 'some-value',
                 
-            }),
-            'cart_status': CheckboxInput(attrs={
-                'class':'check-input',
-                'name':'cart',
-                'data-custom': 'some-value',
-                
-            }),
+            })
         }

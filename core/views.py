@@ -10,9 +10,17 @@ def home(request):
     }
     return render(request, 'core/home.html', context)
 
-def addProduct(request):
+def addProduct(request, id):
+    collection = Collection.objects.get(id=id)
     page = 'pro'
     form = ProductForm()
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.collection = collection
+            product.save()
+            return redirect('home')
     context = {
         'form':form,
         'page':page,
@@ -40,3 +48,11 @@ def collections(request):
         'collections':collections,
     }
     return render(request, 'core/collections.html', context)
+
+def collection(request, id):
+    collection = Collection.objects.get(id = id)
+
+    context = {
+
+    }
+    return render(request, 'core/collection.html', context)

@@ -13,16 +13,16 @@ class Product(models.Model):
     description = models.CharField(max_length=500)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to='products/')
     sold_status = models.BooleanField(default=False)
-    cart_status = models.BooleanField(default=False)
+    pre_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.description[:50]
 
 class Cart(models.Model):
     products = models.ManyToManyField(Product, related_name='product')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)

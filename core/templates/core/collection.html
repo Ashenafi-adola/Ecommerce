@@ -1,0 +1,34 @@
+
+{% extends 'accounts/base.html' %}
+{% load static %}
+{% block title %} {{ collection.name }} Collection {% endblock %}
+
+{% block content %}
+<div>
+    <div>
+        {% for product in products %}
+            <div>
+                <div>
+                    <div>
+                        <img src="{{ product.photo.url }}" alt="{{ product.name }}-{{ product.id }}">
+                    </div>
+                    <div>
+                        <h2>{{ product.name }}</h2>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <p>{{ product.description }}</p>
+                    </div>
+                    <div>
+                        <span>Price: {{ product.price }}</span>
+                    </div> 
+                    <div>
+                        <span><b>Sell Status: </b>{% if product.sold_status == True %} sold {% else %} Not sold {% endif %}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
