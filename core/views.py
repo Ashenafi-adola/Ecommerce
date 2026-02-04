@@ -4,9 +4,11 @@ from . models import *
 
 
 def home(request):
+    q = request.GET.get('search') if request.GET.get('search') != None else ''
+    products = Product.objects.filter(name__icontains=q).order_by('-pre_date')
 
     context = {
-
+        'products':products,
     }
     return render(request, 'core/home.html', context)
 
@@ -51,8 +53,9 @@ def collections(request):
 
 def collection(request, id):
     collection = Collection.objects.get(id = id)
+    products = Product.objects.filter(collection=collection)
 
     context = {
-
+        'products':products,
     }
     return render(request, 'core/collection.html', context)

@@ -1,11 +1,29 @@
 {% extends 'accounts/base.html' %}
-
+{% load static %}
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<div>
-    <div>
-        
+<div class="container py-4">
+    <div class="row g-3">
+        {% for product in products %}
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 shadow-sm">
+                    {% if product.photo %}
+                        <img src="{{ product.photo.url }}" class="card-img-top img-fluid" alt="{{ product.name }}-{{ product.id }}">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text text-muted mb-2" style="display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;">{{ product.description }}</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold">Price: {{ product.price }} Birr</span>
+                                <span class="text-muted small"><b>Sell Status:</b> {% if product.sold_status %}sold{% else %}Not sold{% endif %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
