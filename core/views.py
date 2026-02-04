@@ -57,5 +57,6 @@ def collection(request, id):
 
     context = {
         'products':products,
+        'collection':collection
     }
     return render(request, 'core/collection.html', context)

@@ -16,9 +16,24 @@ class Product(models.Model):
     photo = models.ImageField(upload_to='products/')
     sold_status = models.BooleanField(default=False)
     pre_date = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='like', null=True)
+    views = models.ManyToManyField(User, related_name='view', null=True)
 
     def __str__(self):
         return self.description[:50]
+
+class PhoneInfo(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    screen_type = models.CharField(max_length=200)
+    screen_resolution = models.CharField(max_length=20)
+    ram = models.PositiveIntegerField()
+    storage = models.PositiveIntegerField()
+    camera = models.PositiveIntegerField()
+    battery = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.product
+
 
 class Cart(models.Model):
     products = models.ManyToManyField(Product, related_name='product')

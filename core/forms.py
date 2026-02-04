@@ -26,7 +26,7 @@ class ProductForm(ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
-        exclude = ['collection']
+        exclude = ['collection', 'likes', 'views', 'sold_status']
         widgets = {
             'name': TextInput(attrs={
                 'class':'norm-input',
