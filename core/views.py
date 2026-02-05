@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import CollectionForm, ProductForm, PhoneInfoForm
 from . models import *
+import os
 
 
 def home(request):
@@ -36,6 +37,13 @@ def addProduct(request, id):
 
 def deleteProduct(request, id):
     product = Product.objects.get(id=id)
+    if request.method == "POST":
+        try:
+            os.remove(f'D:/Django/ecommerce django/ecommerce/{product.photo.url}')
+        except ValueError:
+            print("no file associated with it")
+        product.delete()
+        return redirect('home')
     context ={
         'product':product
     }
@@ -99,10 +107,11 @@ def product_details(request, id):
     try:
         if request.user not in product.views.all():
             product.views.add(request.user)
-        if request.method == 'POST' and request.user not in product.likes.all():
-            product.likes.add(request.user)
-        elif request.method == 'POST' and request.user in product.likes.all():
-            product.likes.remove(request.user)
+        if request.method == "POST":
+            if request.POST.get('btn') == 'like' and request.user not in product.likes.all():
+                product.likes.add(request.user)
+            elif request.POST.get('btn') == 'like' and request.user in product.likes.all():
+                product.likes.remove(request.user)
     except:
         pass
 
