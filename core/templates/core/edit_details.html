@@ -1,0 +1,87 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %} Add item {% endblock %}
+
+{% block content %}
+<style>
+    .helptext{
+        display: none;
+    }
+    .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-form{
+    margin-top: 250px;
+    border: solid gray 0.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+    border-radius: 5px;
+    width: 350px;
+    align-self: center;
+    background-color: #e3eaeb;
+    box-shadow: 2px 2px 3px;
+}
+.form-header{
+    text-align: center;
+}
+.norm-input{
+    height: 30px;
+    font-size: 20px;
+    width: 99%;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    outline: none;
+    border: solid #2a92fa 1px;
+    border-radius: 5px;
+}
+textarea{
+    width: 99%;
+    border-radius: 5px;
+    border: solid #2a92fa 1px;
+}
+.add-form input:focus {
+    border-color: #2a92fa;
+    box-shadow: 1px 2px 4px rgba(77, 166, 255, 1);
+}
+.add-form textarea:focus {
+    border-color: #2a92fa;
+    box-shadow: 1px 2px 4px rgba(77, 166, 255, 1);
+}
+.add-btn{
+    margin-top: 10px;
+    width: 99%;
+    border: none;
+    background-color: rgb(101, 101, 255);
+    border-radius: 5px;
+    height: 30px;
+    color: white;
+    font-size: 20px;
+}
+.add-btn:hover{
+    scale: 1.006;
+    background-color: rgb(81, 81, 253);
+}
+
+</style>
+<div class="container">
+    <form action="" method="post" class="add-form" enctype="multipart/form-data">
+        <div class="add-head-div">
+            <h2 class="form-header">ADD{% if page == 'pro' %} PRODUCT{% else %} COLLECTION {% endif %}</h2>
+        </div>
+        {% csrf_token %}
+        <div>
+            {{form}}
+        </div>
+        <div>
+            {% if page == 'pro' %}
+            <label for="check">Phone: </label>
+            <input type="checkbox" name="check">
+            {% endif %}
+        </div>
+        <div>
+            <button type="submit" class="add-btn">Add {% if page == 'pro' %} Product{% else %} Collection{% endif %}</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -78,6 +78,12 @@ class PhoneInfoForm(ModelForm):
                 'data-custom': 'some-value',
                 'placeholder': 'Screen Resolution'
             }),
+            'screen_size':NumberInput(attrs={
+                'class':'norm-input',
+                'name':'name',
+                'data-custom': 'some-value',
+                'placeholder': 'Screen Size'
+            }),
             'ram': NumberInput(attrs={
                 'class':'norm-input',
                 'name':'price',

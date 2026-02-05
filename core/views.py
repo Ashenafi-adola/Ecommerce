@@ -90,9 +90,54 @@ def product_details(request, id):
     except Exception:
         info = "not exist"
 
+    if request.user not in product.views.all():
+        product.views.add(request.user)
+    if request.method == 'POST' and request.user not in product.likes.all():
+        product.likes.add(request.user)
+    elif request.method == 'POST' and request.user in product.likes.all():
+        product.likes.remove(request.user)
+
     context = {
         'product':product,
         'phoneinfo': phoneinfo,
         'info': info,
     }
     return render(request, 'core/product_detail.html', context)
+
+def editProductDetails(request, id):
+    page = 'pro'
+    product = Product.objects.get(id=id)
+    form = ProductForm(instance=product)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid() and request.POST.get('check') == 'on':
+            product = form.save(commit=False)
+            product.save()
+            return redirect(f'/core/edit-details1/{product.id}')
+        elif form.is_valid():
+            product = form.save(commit=False)
+            product.save()
+            return redirect(f'/core/product-details/{id}/')
+
+
+    context = {
+        'form':form,
+        'page':page,
+    }
+    return render(request, 'core/edit_details.html', context)
+
+def editProductDetails1(request, id):
+    product = Product.objects.get(id=id)
+    info = PhoneInfo.objects.get(product=product)
+    form = PhoneInfoForm(instance=info)
+    if request.method == 'POST':
+        form = PhoneInfoForm(request.POST, instance=info)
+        if form.is_valid():
+            moreinfo = form.save(commit=False)
+            moreinfo.save()
+            return redirect(f'/core/product-details/{id}/')
+        
+    context = {
+        'form':form,
+    }
+    return render(request, 'core/edit_details.html', context)
