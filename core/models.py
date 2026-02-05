@@ -26,6 +26,7 @@ class PhoneInfo(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
     screen_type = models.CharField(max_length=200)
     screen_resolution = models.CharField(max_length=20)
+    screen_size = models.DecimalField(null=True, max_digits=4, decimal_places=2)
     ram = models.PositiveIntegerField()
     storage = models.PositiveIntegerField()
     camera = models.PositiveIntegerField()

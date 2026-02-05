@@ -83,8 +83,16 @@ def collection(request, id):
 
 def product_details(request, id):
     product = Product.objects.get(id=id)
-    
-    context = {
+    phoneinfo = None
+    try:
+        phoneinfo = PhoneInfo.objects.get(product=product)
+        info = 'exist'
+    except Exception:
+        info = "not exist"
 
+    context = {
+        'product':product,
+        'phoneinfo': phoneinfo,
+        'info': info,
     }
-    return render(request, 'core/product_details.html', context)
+    return render(request, 'core/product_detail.html', context)

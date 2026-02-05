@@ -3,18 +3,46 @@
 {% block title %} {{ product.name }} {% endblock %}
 
 {% block content %}
+<style>
+    hr{
+        margin: 3px;
+    }
+</style>
 <div>
     <div>
         <div>
             <h3> {{ product.name }}</h3>
         </div>
-        <div>
-            <img src="" alt="{{ product.name }}">
+        <div style="display: grid; grid-template-columns: 1fr 3fr;">
+            <div>
+                <img src="{{ product.photo.url }}" alt="{{ product.name }}" style="width: 1fr;">
+            </div>
+            {% if info == 'exist' %}
+                <div>
+                    <span><b>Model: </b>{{ phoneinfo.product.name }}</span><hr>
+                    <span><b>RAM: </b>{{ phoneinfo.ram }} GB</span><hr>
+                    <span><b>Storage: </b>{{ phoneinfo.storage }} GB</span><hr>
+                    <span><b>Display Type: </b>{{ phoneinfo.screen_type }}</span><hr>
+                    <span><b>Display Size: </b>{{ phoneinfo.screen_size }}</span><hr>
+                    <span><b>Display Resolution: </b>{{ phoneinfo.screen_resolution }}</span><hr>
+                    <span><b>Battery: </b>{{ phoneinfo.battery }} mAh</span><hr>
+                    <span><b>Camera: </b>{{ phoneinfo.camera }}MP</span><hr>
+                    
+                </div>
+            {% endif %}
         </div>
         <div>
             <div>
-                <span></span>
+                <p><b>Description: </b>{{ product.description }}</p><hr>
+                <span><b>Price: </b>{{ product.price }} ETB</span><hr>
+                <span><b>Collection: </b> {{ product.collection }}</span><hr>
+                <span><b>Sell Status: </b> {% if product.sold_status %}sold{% else %}Not sold{% endif %}</span><hr>
+                <span><b>Uploaded: </b> {{ product.pre_date | timesince }} ago</span><hr>
+                <span><b>Likes👍: </b> {{ product.likes.count }}</span>
+                <span><b>Views👁️: </b>{{ product.views.count }}</span>
+                <hr>
             </div>
+            
         </div>
     </div>
 </div>
