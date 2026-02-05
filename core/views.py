@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CollectionForm, ProductForm
+from .forms import CollectionForm, ProductForm, PhoneInfoForm
 from . models import *
 
 
@@ -18,8 +18,12 @@ def addProduct(request, id):
     form = ProductForm()
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
-        print(request.POST.get('check'))
-        if form.is_valid():
+        if form.is_valid() and request.POST.get('check') == 'on':
+            product = form.save(commit=False)
+            product.collection = collection
+            product.save()
+            return redirect(f'/core/phone-info/{product.id}')
+        elif form.is_valid():
             product = form.save(commit=False)
             product.collection = collection
             product.save()
@@ -32,7 +36,19 @@ def addProduct(request, id):
 
 def phoneDetails(request, id):
     phone = Product.objects.get(id=id)
-    
+    form = PhoneInfoForm()
+    if request.method == 'POST':
+        form = PhoneInfoForm(request.POST)
+        if form.is_valid():
+            pho = form.save(commit=False)
+            pho.product = phone
+            pho.save()
+            return redirect('home')
+    context = {
+        'form':form,
+    }
+    return render(request, 'core/more_info.html', context)
+
 def addCollection(request):
     page = 'col'
     form = CollectionForm()

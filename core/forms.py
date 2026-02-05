@@ -65,7 +65,7 @@ class PhoneInfoForm(ModelForm):
         model = PhoneInfo
         fields = '__all__'
         exclude = ['product']
-        widget = {
+        widgets = {
             'screen_type':TextInput(attrs={
                 'class':'norm-input',
                 'name':'name',
