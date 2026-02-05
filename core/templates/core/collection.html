@@ -30,7 +30,7 @@
                                 <span class="text-muted small"><b>Sell Status:</b> {% if product.sold_status %}sold{% else %}Not sold{% endif %}</span>
                             </div>
                             {% if user.is_superuser %}
-                            <a href="{% url 'add-product' collection.id %}" class="btn btn-sm btn-primary rounded-pill d-inline-flex align-items-center shadow-sm add-product-btn" data-bs-toggle="tooltip" title="Add a new product" style="font-size: 12px;">
+                            <a href="{% url 'edit-details' product.id %}" class="btn btn-sm btn-primary rounded-pill d-inline-flex align-items-center shadow-sm add-product-btn" data-bs-toggle="tooltip" title="Add a new product" style="font-size: 12px;">
                                 <span class="me-2 fw-bold" aria-hidden="true">+</span>
                                 <span>Edit Details</span>
                             </a>

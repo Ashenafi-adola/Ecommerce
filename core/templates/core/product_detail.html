@@ -8,27 +8,27 @@
         margin: 3px;
     }
 </style>
-<div>
+<div class="container py-4">
     <div>
-        <div>
+        <div class="mb-3">
             <h3> {{ product.name }}</h3>
             {% if user.is_superuser %}
             <a href="{% url 'edit-details' product.id %}" class="btn btn-sm btn-primary rounded-pill d-inline-flex align-items-center shadow-sm add-product-btn" data-bs-toggle="tooltip" title="Edit Details" style="font-size: 18px;">
                 <span class="me-2 fw-bold" aria-hidden="true">✏️</span>
                 <span>Edit Details</span>
             </a>
-            <a href="" class="btn btn-sm btn-danger rounded-pill d-inline-flex align-items-center shadow-sm add-product-btn" data-bs-toggle="tooltip" title="Delete Product" style="font-size: 18px;">
+            <a href="{% url 'delete' product.id %}" class="btn btn-sm btn-danger rounded-pill d-inline-flex align-items-center shadow-sm add-product-btn" data-bs-toggle="tooltip" title="Delete Product" style="font-size: 18px;">
                 <span class="me-2 fw-bold" aria-hidden="true">🗑️</span>
                 <span>Delete Product</span>
             </a>
             {% endif %}
         </div>
         <div style="display: grid; grid-template-columns: 1fr 3fr;">
-            <div>
-                <img src="{{ product.photo.url }}" alt="{{ product.name }}" style="width: 1fr;">
+            <div class="container-fluid p-3 my-3 border">
+                <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="img-fluid">
             </div>
             {% if info == 'exist' %}
-                <div>
+                <div class="container-fluid p-3 my-3 border">
                     <span><b>Model: </b>{{ phoneinfo.product.name }}</span><hr>
                     <span><b>RAM: </b>{{ phoneinfo.ram }} GB</span><hr>
                     <span><b>Storage: </b>{{ phoneinfo.storage }} GB</span><hr>
@@ -41,8 +41,8 @@
                 </div>
             {% endif %}
         </div>
-        <div>
-            <div>
+        <div class="container-fluid p-3 my-3 border">
+            <div class="container">
                 <p><b>Description: </b>{{ product.description }}</p><hr>
                 <span><b>Price: </b>{{ product.price }} ETB</span><hr>
                 <span><b>Collection: </b> {{ product.collection }}</span><hr>
@@ -50,9 +50,9 @@
                 <span><b>Uploaded: </b> {{ product.pre_date | timesince }} ago</span><hr>
                 <form action="" method="post">
                     {% csrf_token %}
-                    <button type="submit"><b>Likes👍 </b> {{ product.likes.count }}</button>
+                    <button type="submit" class="btn btn-outline-primary" ><b>{{ product.likes.count }}👍</b> </button>
                 </form>
-                <span><b>Views👁️: </b>{{ product.views.count }}</span>
+                <span><b>{{ product.views.count }}👁️: </b></span>
                 <hr>
             </div>
             

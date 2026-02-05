@@ -34,6 +34,13 @@ def addProduct(request, id):
     }
     return render(request, 'core/add_item.html', context)
 
+def deleteProduct(request, id):
+    product = Product.objects.get(id=id)
+    context ={
+        'product':product
+    }
+    return render(request, 'core/delete_page.html', context)
+
 def phoneDetails(request, id):
     phone = Product.objects.get(id=id)
     form = PhoneInfoForm()
@@ -89,13 +96,15 @@ def product_details(request, id):
         info = 'exist'
     except Exception:
         info = "not exist"
-
-    if request.user not in product.views.all():
-        product.views.add(request.user)
-    if request.method == 'POST' and request.user not in product.likes.all():
-        product.likes.add(request.user)
-    elif request.method == 'POST' and request.user in product.likes.all():
-        product.likes.remove(request.user)
+    try:
+        if request.user not in product.views.all():
+            product.views.add(request.user)
+        if request.method == 'POST' and request.user not in product.likes.all():
+            product.likes.add(request.user)
+        elif request.method == 'POST' and request.user in product.likes.all():
+            product.likes.remove(request.user)
+    except:
+        pass
 
     context = {
         'product':product,
@@ -128,14 +137,24 @@ def editProductDetails(request, id):
 
 def editProductDetails1(request, id):
     product = Product.objects.get(id=id)
-    info = PhoneInfo.objects.get(product=product)
-    form = PhoneInfoForm(instance=info)
-    if request.method == 'POST':
-        form = PhoneInfoForm(request.POST, instance=info)
-        if form.is_valid():
-            moreinfo = form.save(commit=False)
-            moreinfo.save()
-            return redirect(f'/core/product-details/{id}/')
+    try:
+        info = PhoneInfo.objects.get(product=product)
+        form = PhoneInfoForm(instance=info)
+        if request.method == 'POST':
+            form = PhoneInfoForm(request.POST, instance=info)
+            if form.is_valid():
+                moreinfo = form.save(commit=False)
+                moreinfo.save()
+                return redirect(f'/core/product-details/{id}/')
+    except:
+        form = PhoneInfoForm()
+        if request.method == 'POST':
+            form = PhoneInfoForm(request.POST)
+            if form.is_valid():
+                moreinfo = form.save(commit=False)
+                moreinfo.product = product
+                moreinfo.save()
+                return redirect(f'/core/product-details/{id}/')
         
     context = {
         'form':form,
