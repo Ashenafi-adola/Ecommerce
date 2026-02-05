@@ -18,6 +18,7 @@ def addProduct(request, id):
     form = ProductForm()
     if request.method == "POST":
         form = ProductForm(request.POST, request.FILES)
+        print(request.POST.get('check'))
         if form.is_valid():
             product = form.save(commit=False)
             product.collection = collection
@@ -29,6 +30,9 @@ def addProduct(request, id):
     }
     return render(request, 'core/add_item.html', context)
 
+def phoneDetails(request, id):
+    phone = Product.objects.get(id=id)
+    
 def addCollection(request):
     page = 'col'
     form = CollectionForm()
@@ -60,3 +64,11 @@ def collection(request, id):
         'collection':collection
     }
     return render(request, 'core/collection.html', context)
+
+def product_details(request, id):
+    product = Product.objects.get(id=id)
+    
+    context = {
+
+    }
+    return render(request, 'core/product_details.html', context)

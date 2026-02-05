@@ -16,8 +16,8 @@ class Product(models.Model):
     photo = models.ImageField(upload_to='products/')
     sold_status = models.BooleanField(default=False)
     pre_date = models.DateTimeField(auto_now_add=True)
-    likes = models.ManyToManyField(User, related_name='like', null=True)
-    views = models.ManyToManyField(User, related_name='view', null=True)
+    likes = models.ManyToManyField(User, related_name='like')
+    views = models.ManyToManyField(User, related_name='view')
 
     def __str__(self):
         return self.description[:50]

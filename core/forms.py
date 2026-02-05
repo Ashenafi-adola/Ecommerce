@@ -60,3 +60,46 @@ class ProductForm(ModelForm):
                 
             })
         }
+class PhoneInfoForm(ModelForm):
+    class Meta:
+        model = PhoneInfo
+        fields = '__all__'
+        exclude = ['product']
+        widget = {
+            'screen_type':TextInput(attrs={
+                'class':'norm-input',
+                'name':'name',
+                'data-custom': 'some-value',
+                'placeholder': 'Screen Type'
+            }),
+            'screen_resolution':TextInput(attrs={
+                'class':'norm-input',
+                'name':'name',
+                'data-custom': 'some-value',
+                'placeholder': 'Screen Resolution'
+            }),
+            'ram': NumberInput(attrs={
+                'class':'norm-input',
+                'name':'price',
+                'data-custom': 'some-value',
+                'placeholder': 'RAM'
+            }),
+            'storage': NumberInput(attrs={
+                'class':'norm-input',
+                'name':'price',
+                'data-custom': 'some-value',
+                'placeholder': 'Storage'
+            }),
+            'camera': NumberInput(attrs={
+                'class':'norm-input',
+                'name':'price',
+                'data-custom': 'some-value',
+                'placeholder': 'Camera'
+            }),
+            'battery': NumberInput(attrs={
+                'class':'norm-input',
+                'name':'price',
+                'data-custom': 'some-value',
+                'placeholder': 'Battery'
+            }),
+        }

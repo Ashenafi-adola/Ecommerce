@@ -74,6 +74,12 @@ textarea{
             {{form}}
         </div>
         <div>
+            {% if page == 'pro' %}
+            <label for="check">Phone: </label>
+            <input type="checkbox" name="check">
+            {% endif %}
+        </div>
+        <div>
             <button type="submit" class="add-btn">Add {% if page == 'pro' %} Product{% else %} Collection{% endif %}</button>
         </div>
     </form>
