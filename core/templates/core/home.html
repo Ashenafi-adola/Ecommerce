@@ -24,7 +24,14 @@
                             <div>
                                 <span class="text-muted small"><b>Sell Status:</b> {% if product.sold_status %}sold{% else %}Not sold{% endif %}</span>
                             </div>
-                            
+                            <div>
+                                <form action="" method="post" style="display: inline-block;">
+                                    {% csrf_token %}
+                                    <button style="background-color: rgb(0, 255, 0);" type="submit" class="btn btn-outline-primary" name="btn" value="like{{ product.id }}"><b>{{ product.likes.count }}👍</b> </button>
+                                    <button type="submit" class="btn btn-outline-primary" name="btn" value="cart{{ product.id }}">🛒 {% if product not in cart %}Add{% else %}Remove{% endif %}</button>
+                                    <button class="btn btn-outline-primary">{% if not product.sell_status %}Buy{% endif %}</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.description[:50]
+    
 
 class PhoneInfo(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
@@ -39,6 +40,9 @@ class PhoneInfo(models.Model):
 class Cart(models.Model):
     products = models.ManyToManyField(Product, related_name='product')
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.owner.username
 
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)

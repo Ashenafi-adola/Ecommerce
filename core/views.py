@@ -7,9 +7,29 @@ import os
 def home(request):
     q = request.GET.get('search') if request.GET.get('search') != None else ''
     products = Product.objects.filter(name__icontains=q).order_by('-pre_date')
-
+    try:
+        cart = Cart.objects.get(owner=request.user)
+    except:
+        cart = Cart.objects.create(owner= request.user)
+        cart.save()
+    if request.method == "POST":
+        product = Product.objects.get(id=int(request.POST.get('btn')[4:]))
+        print(product)
+        if request.POST.get('btn') == f'cart{product.id}':
+            if  product not in cart.products.all():
+                cart.products.add(product)
+                print(cart.products.all())
+            elif product in cart.products.all():
+                cart.products.remove(product)
+                print(cart.products.all())
+        elif request.POST.get('btn') == f'like{product.id}':
+            if request.user not in product.likes.all():
+                product.likes.add(request.user)
+            elif request.user in product.likes.all():
+                product.likes.remove(request.user)
     context = {
         'products':products,
+        'cart': cart.products.all()
     }
     return render(request, 'core/home.html', context)
 
@@ -71,7 +91,7 @@ def addCollection(request):
         form = CollectionForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('collections')
     context = {
         'form':form,
         'page':page,
@@ -99,6 +119,8 @@ def collection(request, id):
 def product_details(request, id):
     product = Product.objects.get(id=id)
     phoneinfo = None
+    cart = Cart.objects.get(owner= request.user)
+    print(cart.products)
     try:
         phoneinfo = PhoneInfo.objects.get(product=product)
         info = 'exist'
@@ -108,10 +130,19 @@ def product_details(request, id):
         if request.user not in product.views.all():
             product.views.add(request.user)
         if request.method == "POST":
-            if request.POST.get('btn') == 'like' and request.user not in product.likes.all():
-                product.likes.add(request.user)
-            elif request.POST.get('btn') == 'like' and request.user in product.likes.all():
-                product.likes.remove(request.user)
+            if request.POST.get('btn') == 'cart':
+                print('cart')
+                if  product not in cart.products.all():
+                    cart.products.add(product)
+                    print(cart.products.all())
+                elif product in cart.products.all():
+                    cart.products.remove(product)
+                    print(cart.products.all())
+            elif request.POST.get('btn') == 'like':
+                if request.user not in product.likes.all():
+                    product.likes.add(request.user)
+                elif request.user in product.likes.all():
+                    product.likes.remove(request.user)
     except:
         pass
 
@@ -119,6 +150,7 @@ def product_details(request, id):
         'product':product,
         'phoneinfo': phoneinfo,
         'info': info,
+        'cart': cart.products.all(),
     }
     return render(request, 'core/product_detail.html', context)
 

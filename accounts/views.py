@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import  login, authenticate, logout
-
-
-def register(request):
-    pass
+from core.models import *
 
 def signin(request):
     if request.method == 'POST':
@@ -29,6 +26,10 @@ def register(request):
             user = form.save(commit=False)
             user.username.lower()
             user.save()
+            cart = Cart.objects.create(
+                owner = user
+            )
+            cart.save()
             login(request, user)
             return redirect('home')
     
